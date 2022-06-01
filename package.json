@@ -1,0 +1,22 @@
+{
+  "name": "@protagonists/logger",
+  "version": "1.0.5",
+  "description": "An upgrade on the default console",
+  "main": "logger",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThePywon/logger.git"
+  },
+  "author": "Pywon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThePywon/logger/issues"
+  },
+  "homepage": "https://github.com/ThePywon/logger#readme",
+  "dependencies": {
+    "@protagonists/emitter": "^1.0.6"
+  }
+}
