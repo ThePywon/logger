@@ -3,22 +3,25 @@
 // Imports
 const fs = require("fs");
 const Emitter = require("@protagonists/emitter");
-const Color = require("./Color.js");
+const Color = require("./Color");
+const { Options, Filename } = require("./Options");
 
 function Logger(options) {
-  // Make sure the options object isn't undefined past this point
-  options = options ? options : {};
+  // Convert & validate all properties
+  options = Options(options || {});
+  console.log(options);
+
   // Set this instance as an "emitter"
   Emitter.setEmitter(this);
 
   // Clear the file's inner text
-  if(options.file)
+  if(options.file !== Filename.Empty)
     fs.writeFile(options.file, '', err => {
       if(err) throw new Error(err);
     });
 
   const styleEnabled = () => {
-    return !options.file && (options.style === undefined || options.style);
+    return options.file === Filename.Empty && options.style;
   }
 
   const getTimestamp = () => {
@@ -33,8 +36,7 @@ function Logger(options) {
   Object.defineProperty(this, "displayName", {
     enumerable: true,
     get: () => {
-      const name = (this.constructor && this.constructor.name) || "Object";
-      return styleEnabled() ? Color.blackBg(name) : name;
+      return styleEnabled() && this.constructor.name ? Color.blackBg(this.constructor.name) : this.constructor.name;
     }
   });
   
@@ -92,7 +94,7 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
 
     // Display name if enabled
-    if(options.name === undefined || options.name)
+    if(options.name && this.displayName)
       result.push(this.displayName + ':');
 
     // Stringify each passed element
@@ -100,7 +102,7 @@ function Logger(options) {
       result.push(stringify(args[i], 0, styleEnabled()));
 
     // Output everything
-    if(options.file)
+    if(options.file !== Filename.Empty)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
         if(err) throw new Error(err);
       });
@@ -108,8 +110,7 @@ function Logger(options) {
       process.stdout.write(result.join(' ')+'\n');
   });
   // Disable the behaviour if intended
-  if(options.log !== undefined && !options.log)
-    this.disableDefault("log");
+  if(!options.log) this.disableDefault("log");
 
   
   this.setDefault("warn", (...args) => {
@@ -121,7 +122,7 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
     
     // Display name if enabled
-    if(options.name === undefined || options.name)
+    if(options.name && this.displayName)
       result.push(this.displayName + (!styleEnabled() ? " WARN:" : ' '+Color.black(Color.yellowBg("WARN"))+':'));
     else 
       result.push(!styleEnabled() ? "WARN:" : Color.black(Color.yellowBg("WARN"))+':');
@@ -131,7 +132,7 @@ function Logger(options) {
       result.push(stringify(args[i], 0, styleEnabled()));
 
     // Output everything
-    if(options.file)
+    if(options.file !== Filename.Empty)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
         if(err) throw new Error(err);
       });
@@ -139,7 +140,7 @@ function Logger(options) {
       process.stdout.write(result.join(' ')+'\n');
   });
   // Disable the behaviour if intended
-  if(options.warn !== undefined && !options.warn)
+  if(!options.warn)
     this.disableDefault("warn");
 
   
@@ -152,7 +153,7 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
 
     // Display name if enabled
-    if(options.name === undefined || options.name)
+    if(options.name && this.displayName)
       result.push(this.displayName + (!styleEnabled() ? " CRIT:" : ' '+Color.black(Color.redBg("CRIT"))+':'));
     else 
       result.push(!styleEnabled() ? "CRIT:" : Color.black(Color.redBg("CRIT"))+':');
@@ -162,7 +163,7 @@ function Logger(options) {
       result.push(stringify(args[i], 0, styleEnabled()));
 
     // Output everything
-    if(options.file)
+    if(options.file !== Filename.Empty)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
         if(err) throw new Error(err);
       });
@@ -170,7 +171,7 @@ function Logger(options) {
       process.stdout.write(result.join(' ')+'\n');
   });
   // Disable the behaviour if intended
-  if(options.crit !== undefined && !options.crit)
+  if(!options.crit)
     this.disableDefault("crit");
 
 
@@ -183,7 +184,7 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
 
     // Display name if enabled
-    if(options.name === undefined || options.name)
+    if(options.name && this.displayName)
       result.push(this.displayName + (!styleEnabled() ? " ERROR:" : ' '+Color.black(Color.redBg("ERROR"))+':'));
     else 
       result.push(!styleEnabled() ? "ERROR:" : Color.black(Color.redBg("ERROR"))+':');
@@ -200,7 +201,7 @@ function Logger(options) {
       "\n\n" + obj.stack.split('\n').slice(1).map(e => !e.includes("/home/") ? Color.dark(Color.italic(e)) : e).join('\n'));
 
     // Output everything
-    if(options.file)
+    if(options.file !== Filename.Empty)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
         if(err) throw new Error(err);
       });
@@ -208,7 +209,7 @@ function Logger(options) {
       process.stdout.write(result.join(' ')+'\n');
   });
   // Disable the behaviour if intended
-  if(options.error !== undefined && !options.error)
+  if(!options.error)
     this.disableDefault("error");
 
   
@@ -221,7 +222,7 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
 
     // Display name if enabled
-    if(options.name === undefined || options.name)
+    if(options.name && this.displayName)
       result.push(this.displayName + (!styleEnabled() ? " DEBUG:" : ' '+Color.black(Color.cyanBg("DEBUG"))+':'));
     else 
       result.push(!styleEnabled() ? "DEBUG:" : Color.black(Color.cyanBg("DEBUG"))+':');
@@ -231,7 +232,7 @@ function Logger(options) {
       result.push(stringify(args[i], 0, styleEnabled()));
 
     // Output everything
-    if(options.file)
+    if(options.file !== Filename.Empty)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
         if(err) throw new Error(err);
       });
@@ -239,7 +240,7 @@ function Logger(options) {
       process.stdout.write(result.join(' ')+'\n');
   });
   // Disable the behaviour if intended
-  if(options.debug !== undefined && !options.debug)
+  if(!options.debug)
     this.disableDefault("debug");
 }
 
@@ -256,20 +257,20 @@ function stringify(arg, nest = 0, style = true) {
       
       let stringNest = [];
       for(let i = 0; i < nest; i++)
-        stringNest.push("\t");
+        stringNest.push("  ");
       stringNest = stringNest.join('');
 
       
       if(nest < 5) {
         
-        let stringArg = `${arg.constructor ? arg.constructor.name : arg.name || "Object"} {\n`;
+        let stringArg = arg.constructor && arg.constructor.name !== "Object" ? arg.constructor.name + " {\n" : arg.name ? arg.name + " {\n" : "{\n";
 
         const props = Object.getOwnPropertyNames(arg);
         for(let i = 0; i < props.length; i++){
           let desc = Object.getOwnPropertyDescriptor(arg, props[i]);
           stringArg += style ? 
-            `\t${stringNest}${!desc.enumerable ? "\x1b[2;3;37m" : ""}${desc.get && !desc.set ? "\x1b[4m" : ""}${!desc.get && desc.set ? "\x1b[2;35m" : ""}${props[i]}\x1b[0m: ${stringify(arg[props[i]], nest+1, style)}\n` : 
-            `\t${stringNest}${props[i]}: ${stringify(arg[props[i]], nest+1, style)}\n`;
+            `  ${stringNest}${!desc.enumerable ? "\x1b[2;3;37m" : ""}${desc.get && !desc.set ? "\x1b[4m" : ""}${!desc.get && desc.set ? "\x1b[2;35m" : ""}${props[i]}\x1b[0m: ${stringify(arg[props[i]], nest+1, style)}\n` : 
+            `  ${stringNest}${props[i]}: ${stringify(arg[props[i]], nest+1, style)}\n`;
         }
         stringArg += `${stringNest}}`;
         
@@ -285,7 +286,7 @@ arg.constructor && arg.constructor.name}]\x1b[0m` : `[Function: ${arg.name || ar
       
     case "string":
       
-      return nest === 0 || !style ? arg.toString() : `\x1b[32m'${arg.toString()}'\x1b[0m`;
+      return nest === 0 ? arg.toString() : !style ? `'${arg.toString()}'` : `\x1b[32m'${arg.toString()}'\x1b[0m`;
       
     case "number":
     case "boolean":
