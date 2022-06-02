@@ -9,7 +9,6 @@ const { Options, Filename } = require("./Options");
 function Logger(options) {
   // Convert & validate all properties
   options = Options(options || {});
-  console.log(options);
 
   // Set this instance as an "emitter"
   Emitter.setEmitter(this);
@@ -253,6 +252,8 @@ function stringify(arg, nest = 0, style = true) {
     case "object":
       
       if(arg === null) return style ? "\x1b[2;3;37mnull\x1b[0m" : "null";
+
+      if(arg instanceof Date) return style ? Color.magenta(arg.toString()) : arg.toString();
 
       
       let stringNest = [];
