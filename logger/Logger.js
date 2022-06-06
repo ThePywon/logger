@@ -253,7 +253,7 @@ function stringify(arg, nest = 0, style = true) {
       
       if(arg === null) return style ? "\x1b[2;3;37mnull\x1b[0m" : "null";
 
-      if(arg instanceof Date) return style ? Color.magenta(arg.toString()) : arg.toString();
+      if(arg instanceof Date) return style ? Color.magenta(arg.toLocaleString()) : arg.toString();
 
       
       let stringNest = [];
