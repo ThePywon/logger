@@ -27,9 +27,16 @@ A package to log stuff in a better format, as well as adding *color functionnali
 
 > The content below does not correspond to the object structure of the objects
 
-* [**Logger**](https://github.com/ThePywon/Documentation-Template/blob/main/documentation/Logger.md) &nbsp; ![Exported](https://img.shields.io/badge/-Exported-cyan)
+* <details open><summary><a href="https://github.com/ThePywon/logger/blob/main/documentation/Logger.md"><b>Logger</b></a> &nbsp; <img src="https://img.shields.io/badge/-Exported-cyan"/></summary>
+  <p>
 
-* [**Color**](https://github.com/ThePywon/Documentation-Template/blob/main/documentation/Color.md) &nbsp; ![Exported](https://img.shields.io/badge/-Exported-cyan)
+  * [**Options**](https://github.com/ThePywon/logger/blob/main/documentation/Options.md)
+    
+  </p>
+</details>
+  
+
+* [**Color**](https://github.com/ThePywon/logger/blob/main/documentation/Color.md) &nbsp; ![Exported](https://img.shields.io/badge/-Exported-cyan)
 
 ---
 
@@ -68,9 +75,12 @@ The package allows for a slightly better visual on objects and whatnot, as well 
 ### Code:
 
 ```js
+// Imports
 const { Logger } = require("@protagonists/logger");
+// Create new Logger instance
 const myLogger = new Logger({ file: "./someExistingFile.txt" });
 
+// Log some text
 myLogger.log("Hello world!");
 ```
 
