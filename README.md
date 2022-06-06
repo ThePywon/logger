@@ -1,200 +1,90 @@
-# Logger
+<div id="top" align="center">
 
-## A small package to pretty up the logs
+<h1><a href="https://github.com/ThePywon/logger">logger</a></h1>
+ 
+[![npm version](https://img.shields.io/npm/v/@protagonists/logger)](https://npmjs.com/package/@protagonists/logger)
+[![npm downloads](https://img.shields.io/npm/dt/@protagonists/logger)](https://npmjs.com/package/@protagonists/logger)
+[![discord server](https://img.shields.io/discord/937758194736955443?logo=discord&logoColor=white)](https://discord.gg/cwhj3EgqGP)
+[![last commit](https://img.shields.io/github/last-commit/ThePywon/logger)](https://github.com/ThePywon/logger)
+ 
+</div>
 
-This package pretties up the logs, mostly with objects  
-It also allows for coloring in the logs!  
-You can even use it to send local log events from an object
+
+
+# About
+
+A package to log stuff in a better format, as well as adding *color functionnality*!
+
+---
+
+<br/><br/><br/>
 
 
 
 # Table of content
 
-* [How to use?](#how-to-use)
-* [Logger](#logger)
-  * [`Logger.log`](#loggerlog)
-  * [`Logger.warn`](#loggerwarn)
-  * [`Logger.crit`](#loggercrit)
-  * [`Logger.error`](#loggererror)
-  * [`Logger.debug`](#loggerdebug)
-  * [`Logger.setLogger`](#loggersetlogger)
-* [Color](#color)
-  * [Colors](#colors)
-  * [Backgrounds](#backgrounds)
-  * [Styles](#styles)
+* [**How to use?**](#how-to-use)
+
+> The content below does not correspond to the object structure of the objects
+
+* [**Logger**](https://github.com/ThePywon/Documentation-Template/blob/main/documentation/Logger.md) &nbsp; ![Exported](https://img.shields.io/badge/-Exported-cyan)
+
+* [**Color**](https://github.com/ThePywon/Documentation-Template/blob/main/documentation/Color.md) &nbsp; ![Exported](https://img.shields.io/badge/-Exported-cyan)
+
+---
+
+<br/><br/><br/>
 
 
 
-# how to use?
+# How to use?
 
-first up, lets install it!
+## Description
 
-```sh
-npm install @protagonists/logger
-```
+The package allows for a slightly better visual on objects and whatnot, as well as allow users to add *color* to the logs!
 
-```js
-const { Logger, Color } = require("@protagonists/logger");
-```
+## Import
 
-We create a new instance!
+### Terminal
 
-```js
-const logger = new Logger();
-```
+> ```sh
+> npm install @protagonists/logger
+> ```
 
+### Node.js
 
+> ```js
+> const { Logger, Color } = require("@protagonists/logger");
+> ```
 
-# Logger
-
-`Logger` inherits all the properties from [`Emitter`](https://www.npmjs.com/package/@protagonists/emitter)
-
-# Constructor
-
-## Options
-
-The constructor can be fed in several optionnal parameters that can affect the logger's behaviour
+---
 
 
 
+<br/>
 
+## Example
 
-# Functions
-
-## Logger.log
-
-### Description
-
-A simple `console.log` substitute that outputs in a bit nicer format
-
-### Syntax
+### Code:
 
 ```js
-Logger.log(...args: Any)
+const { Logger } = require("@protagonists/logger");
+const myLogger = new Logger({ file: "./someExistingFile.txt" });
+
+myLogger.log("Hello world!");
 ```
 
-The difference is especially noticable when logging complex objects  
-The function also emits a "log" event  
-(Check out [`@protagonists/emitter`](https://www.npmjs.com/package/@protagonists/emitter) to know more)
+<br/>
 
-## Logger.warn
+### Output:
 
-### Description
+> `./someExistingFile.txt`
 
-This function is similar to `Logger.log` but sends a warning event instead  
-This is intended to be used whenever problematic behaviour is detected
-
-### Syntax
-
-```js
-Logger.warn(...args: Any)
+```
+Logger: Hello world!
 ```
 
-## Logger.crit
+<br/><br/><br/><br/><br/>
 
-### Description
-
-This function is, again, very similar to `Logger.log`  
-This time, it sends (you guessed it) a "crit" event  
-This is intended to be used when a problem occures but **does not** end the process (so not thrown because the situation is still salvagable)
-
-### Syntax
-
-```js
-Logger.crit(...args: Any)
-```
-
-## Logger.error
-
-### Description
-
-This function is basically like `Logger.crit` but has a stack trace along with it  
-This is intended to be used when a problem occures and **does** end the process (situation is non-salvagable)
-
-### Syntax
-
-```js
-Logger.error(...args: Any)
-```
-
-## Logger.debug
-
-### Description
-
-This function is similar to all the other logging functions of `Logger`  
-This is intended to be used to send additionnal information to users
-
-### Syntax
-
-```js
-Logger.debug(...args: Any)
-```
-
-## Logger.setLogger
-
-### Description
-
-This function makes an object inherit from `Logger`
-
-### Example
-
-```js
-Logger.setLogger(obj);
-obj.warn("Local Warning!");
-```
-
-you can then use the object as an [`Emitter`](https://www.npmjs.com/package/@protagonists/emitter)   
-and do something after the event is emitted
-
-```js
-Logger.setLogger(obj);
-
-obj.on("log", (...args)=>{
-  // Your code
-});
-
-obj.log("some text");
-```
-
-## Color
-
-and if you only want to color some text then you can do this
-
-```js
-console.log(Color.italic(Color.green("Success!")));
-```
-
-here are some supported functions
-
-#### Colors
-
-* `black`
-* `red` & `darkred`
-* `green` & `darkgreen`
-* `yellow` & `darkyellow`
-* `blue` & `darkblue`
-* `magenta` & `darkmagenta`
-* `cyan` & `darkcyan`
-* `white`
-* `gray` & `grey`
-
-#### Backgrounds
-
-* `blackBg`
-* `redBg`
-* `greenBg`
-* `yellowBg`
-* `blueBg`
-* `magentaBg`
-* `cyanBg`
-* `whiteBg`
-
-#### Styles
-
-* `bold`
-* `dark`
-* `italic`
-* `underline`
-* `invert`
-* `hide`
-* `cross`
+<h1 align="center">This is the bottom, there is nothing more.<br/>
+Go <a href="#top">back up?</a></h1>

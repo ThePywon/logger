@@ -18,6 +18,6 @@
   "homepage": "https://github.com/ThePywon/logger#readme",
   "dependencies": {
     "@protagonists/coerce": "^1.0.6",
-    "@protagonists/emitter": "^1.0.6"
+    "@protagonists/emitter": "^1.1.0"
   }
 }
