@@ -2,9 +2,10 @@
 
 // Imports
 const fs = require("fs");
+const { Schema } = require("@protagonists/coerce");
 const Emitter = require("@protagonists/emitter");
 const Color = require("./Color");
-const { Options, Filename } = require("./Options");
+const Options = require("./Options");
 
 function Logger(options) {
   // Convert & validate all properties
@@ -14,13 +15,13 @@ function Logger(options) {
   Emitter.setEmitter(this);
 
   // Clear the file's inner text
-  if(options.file !== Filename.Empty)
+  if(!options[Schema.isDefault].file)
     fs.writeFile(options.file, '', err => {
       if(err) throw new Error(err);
     });
 
   const styleEnabled = () => {
-    return options.file === Filename.Empty && options.style;
+    return options[Schema.isDefault].file && options.style;
   }
 
   const getTimestamp = () => {
@@ -101,7 +102,7 @@ function Logger(options) {
       result.push(stringify(args[i], 0, styleEnabled()));
 
     // Output everything
-    if(options.file !== Filename.Empty)
+    if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
         if(err) throw new Error(err);
       });
@@ -131,7 +132,7 @@ function Logger(options) {
       result.push(stringify(args[i], 0, styleEnabled()));
 
     // Output everything
-    if(options.file !== Filename.Empty)
+    if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
         if(err) throw new Error(err);
       });
@@ -162,7 +163,7 @@ function Logger(options) {
       result.push(stringify(args[i], 0, styleEnabled()));
 
     // Output everything
-    if(options.file !== Filename.Empty)
+    if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
         if(err) throw new Error(err);
       });
@@ -200,7 +201,7 @@ function Logger(options) {
       "\n\n" + obj.stack.split('\n').slice(1).map(e => !e.includes("/home/") ? Color.dark(Color.italic(e)) : e).join('\n'));
 
     // Output everything
-    if(options.file !== Filename.Empty)
+    if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
         if(err) throw new Error(err);
       });
@@ -231,7 +232,7 @@ function Logger(options) {
       result.push(stringify(args[i], 0, styleEnabled()));
 
     // Output everything
-    if(options.file !== Filename.Empty)
+    if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
         if(err) throw new Error(err);
       });
