@@ -1,30 +1,9 @@
 const { Schema, SchemaTypes } = require("@protagonists/coerce");
 const fs = require("fs");
 
-class Filename extends SchemaTypes._String_ {
-  static Empty = Symbol("Empty");
-
-  constructor() { super() }
-
-  call(val) {
-    if(val === Filename.Empty) return val;
-
-    val = super.call(val);
-
-    try {
-      if(val === undefined || !fs.existsSync(val)) return undefined;
-    } catch(e) { return undefined }
-
-    return val;
-  }
-}
-Object.defineProperty(Filename.prototype, "toString", {
-  value: function toString() { return "Filename"; },
-  configurable: true
-});
-
 const Options = new Schema({
-  file: Filename,
+  get: Boolean,
+  file: String,
   style: Boolean,
   timestamp: Boolean,
   name: Boolean,
@@ -36,7 +15,8 @@ const Options = new Schema({
 });
 
 Options.setDefaults({
-  file: Filename.Empty,
+  get: false,
+  file: "empty",
   style: true,
   timestamp: false,
   name: true,
@@ -47,4 +27,4 @@ Options.setDefaults({
   debug: true
 });
 
-module.exports = { Options, Filename };
+module.exports = Options;
