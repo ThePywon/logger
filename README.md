@@ -15,7 +15,7 @@
 
 A package to log stuff in a better format, as well as adding *color functionnality*!
 
-> Now working with version `1.0.8` of `@protagonists/coerce` and `1.1.1` of `@protagonists/emitter`
+> Now working with version `1.1.2` of `@protagonists/coerce` and `1.1.2` of `@protagonists/emitter`
 
 ---
 
