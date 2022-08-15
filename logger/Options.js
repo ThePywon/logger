@@ -1,17 +1,18 @@
-const { Schema, SchemaTypes } = require("@protagonists/coerce");
+const { Schema } = require("@protagonists/coerce");
+const { BooleanType, StringType } = require("@protagonists/coerce-basics");
 const fs = require("fs");
 
 const Options = new Schema({
-  get: Boolean,
-  file: String,
-  style: Boolean,
-  timestamp: Boolean,
-  name: Boolean,
-  log: Boolean,
-  warn: Boolean,
-  crit: Boolean,
-  error: Boolean,
-  debug: Boolean
+  get: BooleanType,
+  file: StringType,
+  style: BooleanType,
+  timestamp: BooleanType,
+  name: BooleanType,
+  log: BooleanType,
+  warn: BooleanType,
+  crit: BooleanType,
+  error: BooleanType,
+  debug: BooleanType
 });
 
 Options.setDefaults({
