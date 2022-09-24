@@ -113,7 +113,8 @@ function Logger(options) {
 
     // Display name if enabled
     if(options.showName)
-      result.push(Color.white(Color.blackBg(options.name)) + ':');
+      result.push(!styleEnabled() ? options.name + ':' :
+        Color.white(Color.blackBg(options.name)) + ':');
 
     // Stringify each passed element
     for(let i = 0; i < args.length; i++)
@@ -122,7 +123,10 @@ function Logger(options) {
     // Output everything
     if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
-        if(err) throw new Error(err);
+        if(err)
+          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
+            if(err) throw new Error(err);
+          });
       });
     else
       process.stdout.write(result.join(' ')+'\n');
@@ -141,7 +145,8 @@ function Logger(options) {
     
     // Display name if enabled
     if(options.showName)
-      result.push(Color.white(Color.blackBg(options.name)) +
+      result.push((!styleEnabled() ? options.name + ':' :
+      Color.white(Color.blackBg(options.name)) + ':') +
       (!styleEnabled() ? " WARN:" : ' '+Color.black(Color.yellowBg("WARN"))+':'));
     else 
       result.push(!styleEnabled() ? "WARN:" : Color.black(Color.yellowBg("WARN"))+':');
@@ -152,8 +157,11 @@ function Logger(options) {
 
     // Output everything
     if(!options[Schema.isDefault].file)
-      fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
-        if(err) throw new Error(err);
+      fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
+        if(err)
+          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
+            if(err) throw new Error(err);
+          });
       });
     else
       process.stdout.write(result.join(' ')+'\n');
@@ -173,7 +181,8 @@ function Logger(options) {
 
     // Display name if enabled
     if(options.showName)
-      result.push(Color.white(Color.blackBg(options.name)) +
+      result.push((!styleEnabled() ? options.name + ':' :
+      Color.white(Color.blackBg(options.name)) + ':') +
       (!styleEnabled() ? " CRIT:" : ' '+Color.black(Color.redBg("CRIT"))+':'));
     else 
       result.push(!styleEnabled() ? "CRIT:" : Color.black(Color.redBg("CRIT"))+':');
@@ -184,8 +193,11 @@ function Logger(options) {
 
     // Output everything
     if(!options[Schema.isDefault].file)
-      fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
-        if(err) throw new Error(err);
+      fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
+        if(err)
+          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
+            if(err) throw new Error(err);
+          });
       });
     else
       process.stdout.write(result.join(' ')+'\n');
@@ -205,7 +217,8 @@ function Logger(options) {
 
     // Display name if enabled
     if(options.showName)
-      result.push(Color.white(Color.blackBg(options.name)) +
+      result.push(C(!styleEnabled() ? options.name + ':' :
+      Color.white(Color.blackBg(options.name)) + ':') +
       (!styleEnabled() ? " ERROR:" : ' '+Color.black(Color.redBg("ERROR"))+':'));
     else 
       result.push(!styleEnabled() ? "ERROR:" : Color.black(Color.redBg("ERROR"))+':');
@@ -223,8 +236,11 @@ function Logger(options) {
 
     // Output everything
     if(!options[Schema.isDefault].file)
-      fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
-        if(err) throw new Error(err);
+      fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
+        if(err)
+          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
+            if(err) throw new Error(err);
+          });
       });
     else
       process.stdout.write(result.join(' ')+'\n');
@@ -244,7 +260,8 @@ function Logger(options) {
 
     // Display name if enabled
     if(options.showName)
-      result.push(Color.white(Color.blackBg(options.name)) +
+      result.push((!styleEnabled() ? options.name + ':' :
+      Color.white(Color.blackBg(options.name)) + ':') +
       (!styleEnabled() ? " DEBUG:" : ' '+Color.black(Color.cyanBg("DEBUG"))+':'));
     else 
       result.push(!styleEnabled() ? "DEBUG:" : Color.black(Color.cyanBg("DEBUG"))+':');
@@ -255,8 +272,11 @@ function Logger(options) {
 
     // Output everything
     if(!options[Schema.isDefault].file)
-      fs.appendFileSync(options.file, result.join(' ')+'\n', err=>{
-        if(err) throw new Error(err);
+      fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
+        if(err)
+          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
+            if(err) throw new Error(err);
+          });
       });
     else
       process.stdout.write(result.join(' ')+'\n');

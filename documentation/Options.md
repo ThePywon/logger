@@ -61,7 +61,7 @@ Learn more about [Schema](https://github.com/ThePywon/coerce/blob/main/documenta
 
 ```js
 {
-  file: '',
+  file: 'Empty',
   style: true,
   timestamp: false,
   showName: true,
