@@ -26,7 +26,7 @@ A package to log stuff in a better format, as well as adding *color functionnali
 * <details open><summary><a href="#properties"><b>Properties</b></a></summary>
   <p>
   
-  * [**`.displayName`**](#displayname) &nbsp; ![Read Only](https://shields.io/badge/-Read%20Only-green)
+  * [**`.name`**](#name)
     
   </p>
 </details>
@@ -119,7 +119,7 @@ setTimeout(() => myLogger.log("Log #2"));
 
 <br/>
 
-## `.displayName` &nbsp; ![Read Only](https://shields.io/badge/-Read%20Only-green)
+## `.name`
 
 The name displayed before the logger output (if enabled)
 
@@ -132,26 +132,20 @@ The name displayed before the logger output (if enabled)
 ```js
 // Imports
 const { Logger } = require("@protagonists/logger");
+// Create logger instance
+const foo = new Logger({ name: 'bar' })
 
-// Create 'foo' class
-class foo {
-  // Set this instance as a Logger on initialization
-  constructor() { Logger.setLogger(this) }
-}
-// Create new foo instance
-const bar = new foo();
-
-// Log the instance's displayName
-console.log(bar.displayName);
+// Log the instance's name
+console.log(foo.name);
 // Log some text
-bar.log("Hello world!");
+foo.log("Hello world!");
 ```
 
 **Output:**
 
 ```
-foo
-foo: Hello world!
+bar
+bar: Hello world!
 ```
 
 ---
@@ -193,9 +187,8 @@ const { Logger } = require("@protagonists/logger");
 // Create 'Person' class
 class Person {
   constructor(name) {
-    this.name = name;
     // Set the instance as a logger on initialization
-    Logger.setLogger(this);
+    Logger.setLogger(this, { name });
   }
 
   wakeUp() {

@@ -8,6 +8,21 @@ const Color = require("./Color");
 const Options = require("./Options");
 
 function Logger(options) {
+  // I need an addDefault function soon
+  Options.setDefaults({
+    get: false,
+    file: "empty",
+    style: true,
+    timestamp: false,
+    showName: true,
+    name: this.constructor.name,
+    log: true,
+    warn: true,
+    crit: true,
+    error: true,
+    debug: true
+  });
+
   // Convert & validate all properties
   options = Options(options || {});
 
@@ -33,14 +48,17 @@ function Logger(options) {
   }
 
   // As you guessed it, this handles display name
-  Object.defineProperty(this, "displayName", {
+  Object.defineProperty(this, "name", {
     enumerable: true,
     get: () => {
-      return styleEnabled() && this.constructor.name ? Color.blackBg(this.constructor.name) : this.constructor.name;
+      return options.name;
+    },
+    set: (newName) => {
+      options.name = newName;
     }
   });
   
-
+  // Setup function properties
   Object.defineProperties(this, {
     log:{
       enumerable:true,
@@ -94,8 +112,8 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
 
     // Display name if enabled
-    if(options.name && this.displayName)
-      result.push(this.displayName + ':');
+    if(options.showName)
+      result.push(Color.white(Color.blackBg(options.name)) + ':');
 
     // Stringify each passed element
     for(let i = 0; i < args.length; i++)
@@ -122,8 +140,9 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
     
     // Display name if enabled
-    if(options.name && this.displayName)
-      result.push(this.displayName + (!styleEnabled() ? " WARN:" : ' '+Color.black(Color.yellowBg("WARN"))+':'));
+    if(options.showName)
+      result.push(Color.white(Color.blackBg(options.name)) +
+      (!styleEnabled() ? " WARN:" : ' '+Color.black(Color.yellowBg("WARN"))+':'));
     else 
       result.push(!styleEnabled() ? "WARN:" : Color.black(Color.yellowBg("WARN"))+':');
 
@@ -153,8 +172,9 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
 
     // Display name if enabled
-    if(options.name && this.displayName)
-      result.push(this.displayName + (!styleEnabled() ? " CRIT:" : ' '+Color.black(Color.redBg("CRIT"))+':'));
+    if(options.showName)
+      result.push(Color.white(Color.blackBg(options.name)) +
+      (!styleEnabled() ? " CRIT:" : ' '+Color.black(Color.redBg("CRIT"))+':'));
     else 
       result.push(!styleEnabled() ? "CRIT:" : Color.black(Color.redBg("CRIT"))+':');
 
@@ -184,8 +204,9 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
 
     // Display name if enabled
-    if(options.name && this.displayName)
-      result.push(this.displayName + (!styleEnabled() ? " ERROR:" : ' '+Color.black(Color.redBg("ERROR"))+':'));
+    if(options.showName)
+      result.push(Color.white(Color.blackBg(options.name)) +
+      (!styleEnabled() ? " ERROR:" : ' '+Color.black(Color.redBg("ERROR"))+':'));
     else 
       result.push(!styleEnabled() ? "ERROR:" : Color.black(Color.redBg("ERROR"))+':');
 
@@ -222,8 +243,9 @@ function Logger(options) {
         Color.dark(Color.italic(getTimestamp())));
 
     // Display name if enabled
-    if(options.name && this.displayName)
-      result.push(this.displayName + (!styleEnabled() ? " DEBUG:" : ' '+Color.black(Color.cyanBg("DEBUG"))+':'));
+    if(options.showName)
+      result.push(Color.white(Color.blackBg(options.name)) +
+      (!styleEnabled() ? " DEBUG:" : ' '+Color.black(Color.cyanBg("DEBUG"))+':'));
     else 
       result.push(!styleEnabled() ? "DEBUG:" : Color.black(Color.cyanBg("DEBUG"))+':');
 

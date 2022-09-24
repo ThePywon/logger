@@ -36,20 +36,22 @@ Learn more about [Schema](https://github.com/ThePywon/coerce/blob/main/documenta
 
 ```js
 {
-  file: Filename,
-  style: Boolean,
-  timestamp: Boolean,
-  name: Boolean,
-  log: Boolean,
-  warn: Boolean,
-  crit: Boolean,
-  error: Boolean,
-  debug: Boolean
+  file: StringType,
+  style: Booleantype,
+  timestamp: Booleantype,
+  showName: Booleantype,
+  name: StringType,
+  log: Booleantype,
+  warn: Booleantype,
+  crit: Booleantype,
+  error: Booleantype,
+  debug: Booleantype
 }
 ```
 
-> `Filename` is a custom [SchemaType](https://github.com/ThePywon/coerce/blob/main/documentation/SchemaType.md) which basically parses and converts everthing into a string, as well as validating the existence of the file.  
-> It also contains a static property, `.Empty`, used as a placeholder
+<br/>
+
+> `name` will default to `.constructor.name` if not set!
 
 <br/><br/>
 
@@ -59,10 +61,10 @@ Learn more about [Schema](https://github.com/ThePywon/coerce/blob/main/documenta
 
 ```js
 {
-  file: Filename.Empty,
+  file: '',
   style: true,
   timestamp: false,
-  name: true,
+  showName: true,
   log: true,
   warn: true,
   crit: true,
