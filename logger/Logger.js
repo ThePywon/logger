@@ -123,10 +123,7 @@ function Logger(options) {
     // Output everything
     if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
-        if(err)
-          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
-            if(err) throw new Error(err);
-          });
+        if(err) throw new Error(err);
       });
     else
       process.stdout.write(result.join(' ')+'\n');
@@ -158,10 +155,7 @@ function Logger(options) {
     // Output everything
     if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
-        if(err)
-          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
-            if(err) throw new Error(err);
-          });
+        if(err) throw new Error(err);
       });
     else
       process.stdout.write(result.join(' ')+'\n');
@@ -194,10 +188,7 @@ function Logger(options) {
     // Output everything
     if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
-        if(err)
-          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
-            if(err) throw new Error(err);
-          });
+        if(err) throw new Error(err);
       });
     else
       process.stdout.write(result.join(' ')+'\n');
@@ -217,7 +208,7 @@ function Logger(options) {
 
     // Display name if enabled
     if(options.showName)
-      result.push(C(!styleEnabled() ? options.name + ':' :
+      result.push((!styleEnabled() ? options.name + ':' :
       Color.white(Color.blackBg(options.name)) + ':') +
       (!styleEnabled() ? " ERROR:" : ' '+Color.black(Color.redBg("ERROR"))+':'));
     else 
@@ -237,10 +228,7 @@ function Logger(options) {
     // Output everything
     if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
-        if(err)
-          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
-            if(err) throw new Error(err);
-          });
+        if(err) throw new Error(err);
       });
     else
       process.stdout.write(result.join(' ')+'\n');
@@ -273,10 +261,7 @@ function Logger(options) {
     // Output everything
     if(!options[Schema.isDefault].file)
       fs.appendFileSync(options.file, result.join(' ')+'\n', err => {
-        if(err)
-          fs.writeFileSync(options.file, result.join(' ')+'\n', err => {
-            if(err) throw new Error(err);
-          });
+        if(err) throw new Error(err);
       });
     else
       process.stdout.write(result.join(' ')+'\n');
